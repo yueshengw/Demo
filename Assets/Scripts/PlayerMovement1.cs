@@ -52,7 +52,7 @@ public class PlayerMovement1 : MonoBehaviour
             rb2d.velocity = new Vector2(rb2d.velocity.x, jump);
         }
 
-        if (Input.GetKey(KeyCode.K) && !grounded && Input.GetKey(KeyCode.Space)) 
+        if (Input.GetKey(KeyCode.K) && !grounded && !Input.GetKey(KeyCode.Space)) 
         {
             rb2d.gravityScale = 1.0f;
             moveSpeed = moveSpeed_copy * 1.2f;
@@ -61,6 +61,11 @@ public class PlayerMovement1 : MonoBehaviour
         {
             rb2d.gravityScale = 5.0f;
             moveSpeed = moveSpeed_copy;
+        }
+
+        if (Input.GetKey(KeyCode.Q)) 
+        {
+            transform.position = new Vector3(-19.9f, 44.8f, 0f);
         }
 
         moveInput = Input.GetAxisRaw("Horizontal");
