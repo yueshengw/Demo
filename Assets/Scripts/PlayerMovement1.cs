@@ -13,7 +13,9 @@ public class PlayerMovement1 : MonoBehaviour
     public bool dead;
 
     public Rigidbody2D rb2d;
-    public float moveSpeed;
+
+    public float moveSpeed1;
+
     public float moveInput;
     
     public int jumpNumber;
@@ -49,7 +51,7 @@ public class PlayerMovement1 : MonoBehaviour
         }
 
         moveInput = Input.GetAxisRaw("Horizontal");
-        moveForce = new Vector3(moveInput * moveSpeed, rb2d.velocity.y, 0);
+        moveForce = new Vector3(moveInput * moveSpeed1, rb2d.velocity.y, 0);
         Vector3 m_Input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
