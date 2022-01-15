@@ -24,6 +24,8 @@ public class PlayerMovement1 : MonoBehaviour
 
     public GameObject Player;
 
+    public bool isDashing;
+
     void Awake() {
         rb2d = GetComponent<Rigidbody2D>();
         moveSpeed_copy = moveSpeed;
@@ -55,7 +57,7 @@ public class PlayerMovement1 : MonoBehaviour
         if (Input.GetKey(KeyCode.K) && !grounded && !Input.GetKey(KeyCode.Space)) 
         {
             rb2d.gravityScale = 1.0f;
-            moveSpeed = moveSpeed_copy * 1.2f;
+            moveSpeed = moveSpeed_copy * 1.3f;
         }
         else
         {
@@ -65,7 +67,7 @@ public class PlayerMovement1 : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Q)) 
         {
-            transform.position = new Vector3(-19.9f, 44.8f, 0f);
+            transform.position = new Vector3(-28.8f, 101.7f, 0f);
         }
 
         moveInput = Input.GetAxisRaw("Horizontal");
@@ -73,12 +75,17 @@ public class PlayerMovement1 : MonoBehaviour
         Vector3 m_Input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
+            isDashing = true;
             if (moveInput == 1) {
             rb2d.MovePosition(transform.position + (Vector3.right * 10.0f));
             }
             else if (moveInput == -1)
             //transform.position += Vector3.left * 10.0f;
             rb2d.MovePosition(transform.position + (Vector3.left * 10.0f));
+        }
+        else
+        {
+            isDashing = false;
         }
 
         rb2d.velocity = new Vector2 (moveVelocity, rb2d.velocity.y);
@@ -94,6 +101,10 @@ public class PlayerMovement1 : MonoBehaviour
         if (collider.tag == "Ground")
         {
             grounded = true;
+        }
+        if (collider.tag == "Breakable" && isDashing == true)
+        {
+            Destroy(collider.gameObject);
         }
     }
     private void OnTriggerStay2D(Collider2D collider)
