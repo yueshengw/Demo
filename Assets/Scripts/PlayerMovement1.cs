@@ -117,6 +117,10 @@ public class PlayerMovement1 : MonoBehaviour
         {
             grounded = true;
         }
+        if (collider.tag == "Breakable" && isDashing == true)
+        {
+            Destroy(collider.gameObject);
+        }
     }
     private void OnTriggerExit2D()
     {
