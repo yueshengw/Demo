@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMovement1 : MonoBehaviour
 {    
     public float moveSpeed;
+    public float moveSpeed_copy;
     public float jump;
     float moveVelocity;
 
@@ -25,29 +26,41 @@ public class PlayerMovement1 : MonoBehaviour
 
     void Awake() {
         rb2d = GetComponent<Rigidbody2D>();
+        moveSpeed_copy = moveSpeed;
     }
     void Update () 
     {
         moveVelocity = 0;
 
-        if (Input.GetKey (KeyCode.A)) 
+        if (Input.GetKey(KeyCode.A)) 
         {
             moveVelocity = - moveSpeed;
         }
-        if (Input.GetKey (KeyCode.D)) 
+        if (Input.GetKey(KeyCode.D)) 
         {
             moveVelocity = moveSpeed;
         }
 
-        if (Input.GetKey (KeyCode.DownArrow) || Input.GetKey (KeyCode.S))
+        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
         {
             //transform.position += Vector3.down * 10.0f;
             rb2d.MovePosition(transform.position + (Vector3.down * 2.0f));
         }
 
-        if (Input.GetKey (KeyCode.Space) && grounded) 
+        if (Input.GetKey(KeyCode.Space) && grounded) 
         {
             rb2d.velocity = new Vector2(rb2d.velocity.x, jump);
+        }
+
+        if (Input.GetKey(KeyCode.K) && !grounded && Input.GetKey(KeyCode.Space)) 
+        {
+            rb2d.gravityScale = 1.0f;
+            moveSpeed = moveSpeed_copy * 1.2f;
+        }
+        else
+        {
+            rb2d.gravityScale = 5.0f;
+            moveSpeed = moveSpeed_copy;
         }
 
         moveInput = Input.GetAxisRaw("Horizontal");
