@@ -23,7 +23,7 @@ public class PlayerAbilitiesScript : MonoBehaviour
     {
         DashMove();
         StompMove();
-        //BrakeMove();
+        BrakeMove();
         GlideMove();
 
         if (Input.GetKey(KeyCode.A))
@@ -78,10 +78,16 @@ public class PlayerAbilitiesScript : MonoBehaviour
         }
     }
 
-    /*void BrakeMove()
+    void BrakeMove()
     {
-
-    }*/
+        if (Input.GetKey(KeyCode.J) && GetComponent<PlayerMovementScript>().isGrounded == true)
+        {
+            if (playerDirection == 0)
+            {
+                rb.velocity = Vector2.zero;
+            }
+        }
+    }
     void StompMove()
     {
         if (Input.GetKeyDown(KeyCode.S))
@@ -97,9 +103,9 @@ public class PlayerAbilitiesScript : MonoBehaviour
     }
     void GlideMove()
     {
-        if (Input.GetKey(KeyCode.K))
+        if (Input.GetKey(KeyCode.K) && GetComponent<PlayerMovementScript>().isGrounded == false)
         {
-            rb.drag = 12;
+            rb.drag = 7;
         }
         if (Input.GetKeyUp(KeyCode.K))
         {
