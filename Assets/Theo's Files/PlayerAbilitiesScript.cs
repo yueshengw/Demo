@@ -80,7 +80,7 @@ public class PlayerAbilitiesScript : MonoBehaviour
 
     void BrakeMove()
     {
-        if (Input.GetKey(KeyCode.J) && GetComponent<PlayerMovementScript>().isGrounded == true)
+        if (Input.GetKey(KeyCode.J))
         {
             if (playerDirection == 0)
             {
