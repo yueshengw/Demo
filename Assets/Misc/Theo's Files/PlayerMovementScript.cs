@@ -13,6 +13,8 @@ public class PlayerMovementScript : MonoBehaviour
 
     public bool flip;
     public bool isGrounded;
+    public bool isDead;
+
     //public int playerDirection;
     public int playerHealth;
 
@@ -20,7 +22,7 @@ public class PlayerMovementScript : MonoBehaviour
 
     void Start()
     {
-
+        isDead = false;
 
     }
 
@@ -49,13 +51,24 @@ public class PlayerMovementScript : MonoBehaviour
             }
         }
 
-        if (isGrounded == true && Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space))
+        if (isGrounded == true && Input.GetKeyDown(KeyCode.W))
+        {
+            GetComponent<Rigidbody2D>().AddForce(upMoveForce);
+            isGrounded = false;
+        }
+
+        if (isGrounded == true && Input.GetKeyDown(KeyCode.Space))
         {
             GetComponent<Rigidbody2D>().AddForce(upMoveForce);
             isGrounded = false;
         }
 
         if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+        if(isDead == true)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
@@ -70,6 +83,34 @@ public class PlayerMovementScript : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             playerHealth -= 1;
+        }
+        if (collision.gameObject.tag == "Death")
+        {
+            isDead = true;
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            isGrounded = true;
+        }
+        if (collision.gameObject.tag == "Enemy")
+        {
+            playerHealth -= 1;
+        }
+        if (collision.gameObject.tag == "Death")
+        {
+            isDead = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Ground")
+        {
+            isGrounded = false;
         }
     }
 }
