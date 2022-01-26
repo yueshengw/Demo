@@ -2973,9 +2973,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88acb2e1fb58bd443861900d0d244b99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftMoveForce: {x: -1, y: 0, z: 0}
-  rightMoveForce: {x: 1, y: 0, z: 0}
-  upMoveForce: {x: 0, y: 330, z: 0}
+  leftMoveForce: {x: -3, y: 0, z: 0}
+  rightMoveForce: {x: 3, y: 0, z: 0}
+  upMoveForce: {x: 0, y: 370, z: 0}
   flip: 0
   isGrounded: 0
   isDead: 0
