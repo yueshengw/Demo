@@ -14,11 +14,14 @@ public class PlayerMovementScript : MonoBehaviour
     public bool flip;
     public bool isGrounded;
     public bool isDead;
+    public bool isMoving;
 
     //public int playerDirection;
     public int playerHealth;
 
     private Rigidbody rb;
+
+    public GameObject walkingAudio;
 
     void Start()
     {
@@ -32,8 +35,8 @@ public class PlayerMovementScript : MonoBehaviour
         if (Input.GetKey(KeyCode.A))
         {
             GetComponent<Rigidbody2D>().AddForce(leftMoveForce);
-            //playerDirection = -1;
             flip = true;
+            isMoving = true;
             if (flip == true)
             {
                 GetComponent<SpriteRenderer>().flipX = true;
@@ -43,12 +46,21 @@ public class PlayerMovementScript : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             GetComponent<Rigidbody2D>().AddForce(rightMoveForce);
-            //playerDirection = 1;
             flip = false;
+            isMoving = true;
             if (flip == false)
             {
                 GetComponent<SpriteRenderer>().flipX = false;
             }
+        }
+        
+        if (isMoving == true)
+        {
+            walkingAudio.GetComponent<AudioSource>().Play();
+        }
+        else
+        {
+            //walkingAudio.GetComponent<AudioSource>().Stop();
         }
 
         if (isGrounded == true && Input.GetKeyDown(KeyCode.W))
