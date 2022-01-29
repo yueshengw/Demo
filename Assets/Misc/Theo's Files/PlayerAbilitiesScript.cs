@@ -11,6 +11,9 @@ public class PlayerAbilitiesScript : MonoBehaviour
     public float movementInput;
     public int playerDirection;
 
+    [SerializeField] private AudioSource dashAudio;
+    [SerializeField] private AudioSource groundpoundAudio;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +25,7 @@ public class PlayerAbilitiesScript : MonoBehaviour
     void Update()
     {
         DashMove();
-        StompMove();
+        GroundPoundMove();
         BrakeMove();
         GlideMove();
 
@@ -44,6 +47,7 @@ public class PlayerAbilitiesScript : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.H))
             {
+                dashAudio.Play();
                 if (movementInput < 0)
                 {
                     playerDirection = 1;
@@ -88,7 +92,7 @@ public class PlayerAbilitiesScript : MonoBehaviour
             }
         }
     }
-    void StompMove()
+    void GroundPoundMove()
     {
         if (Input.GetKeyDown(KeyCode.S))
         {
@@ -96,6 +100,7 @@ public class PlayerAbilitiesScript : MonoBehaviour
             {
                 if (playerDirection == 0)
                 {
+                    groundpoundAudio.Play();
                     rb.velocity = Vector2.down * dashSpeed;
                 }
             }

@@ -14,11 +14,16 @@ public class PlayerMovementScript : MonoBehaviour
     public bool flip;
     public bool isGrounded;
     public bool isDead;
+    public bool isMoving;
 
     //public int playerDirection;
     public int playerHealth;
 
     private Rigidbody rb;
+
+    [SerializeField] private AudioSource walkingAudio;
+    [SerializeField] private AudioSource jumpingAudio;
+    [SerializeField] private AudioSource landAudio;
 
     void Start()
     {
@@ -32,8 +37,8 @@ public class PlayerMovementScript : MonoBehaviour
         if (Input.GetKey(KeyCode.A))
         {
             GetComponent<Rigidbody2D>().AddForce(leftMoveForce);
-            //playerDirection = -1;
             flip = true;
+            isMoving = true;
             if (flip == true)
             {
                 GetComponent<SpriteRenderer>().flipX = true;
@@ -43,22 +48,33 @@ public class PlayerMovementScript : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             GetComponent<Rigidbody2D>().AddForce(rightMoveForce);
-            //playerDirection = 1;
             flip = false;
+            isMoving = true;
             if (flip == false)
             {
                 GetComponent<SpriteRenderer>().flipX = false;
             }
         }
+        
+        if (isMoving == true)
+        {
+            walkingAudio.Play();
+        }
+        else
+        {
+            walkingAudio.Stop();
+        }
 
         if (isGrounded == true && Input.GetKeyDown(KeyCode.W))
         {
+            jumpingAudio.Play();
             GetComponent<Rigidbody2D>().AddForce(upMoveForce);
             isGrounded = false;
         }
 
         if (isGrounded == true && Input.GetKeyDown(KeyCode.Space))
         {
+            jumpingAudio.Play();
             GetComponent<Rigidbody2D>().AddForce(upMoveForce);
             isGrounded = false;
         }
@@ -78,6 +94,7 @@ public class PlayerMovementScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "Ground")
         {
+            landAudio.Play();
             isGrounded = true;
         }
         if (collision.gameObject.tag == "Enemy")
