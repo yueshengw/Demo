@@ -21,7 +21,9 @@ public class PlayerMovementScript : MonoBehaviour
 
     private Rigidbody rb;
 
-    public GameObject walkingAudio;
+    [SerializeField] private AudioSource walkingAudio;
+    [SerializeField] private AudioSource jumpingAudio;
+    [SerializeField] private AudioSource landAudio;
 
     void Start()
     {
@@ -56,21 +58,23 @@ public class PlayerMovementScript : MonoBehaviour
         
         if (isMoving == true)
         {
-            walkingAudio.GetComponent<AudioSource>().Play();
+            walkingAudio.Play();
         }
         else
         {
-            //walkingAudio.GetComponent<AudioSource>().Stop();
+            walkingAudio.Stop();
         }
 
         if (isGrounded == true && Input.GetKeyDown(KeyCode.W))
         {
+            jumpingAudio.Play();
             GetComponent<Rigidbody2D>().AddForce(upMoveForce);
             isGrounded = false;
         }
 
         if (isGrounded == true && Input.GetKeyDown(KeyCode.Space))
         {
+            jumpingAudio.Play();
             GetComponent<Rigidbody2D>().AddForce(upMoveForce);
             isGrounded = false;
         }
@@ -90,6 +94,7 @@ public class PlayerMovementScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "Ground")
         {
+            landAudio.Play();
             isGrounded = true;
         }
         if (collision.gameObject.tag == "Enemy")
